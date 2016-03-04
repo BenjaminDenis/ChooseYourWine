@@ -1,5 +1,6 @@
 package com.epsi.projects.chooseyourwine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.epsi.projects.chooseyourwine.activities.WineDetailActivity;
 import com.epsi.projects.chooseyourwine.activities.ListWinesActivity;
 import com.epsi.projects.chooseyourwine.beans.Product;
 import com.epsi.projects.chooseyourwine.ws.ApiClient;
@@ -137,7 +139,8 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
      * @param barcode Id to look for
      */
     private void fetchProduct(final String barcode) {
-        mApiClient.getProduct("3124480182647").enqueue(new Callback<ProductWS>() {
+        final Context context = this;
+        mApiClient.getProduct("8715297180695").enqueue(new Callback<ProductWS>() {
 
             @Override
             public void onResponse(Response<ProductWS> response, Retrofit retrofit) {
@@ -148,11 +151,20 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
                     try {
                         JsonObject productJson = gg.get(0).getAsJsonObject();
 
-                        mProduct.setName(productJson.get("product_name").toString());
-                        mProduct.setBarcode(productJson.get("code").toString());
-                        mProduct.setImgUrl(productJson.get("image_front_small_url").toString());
+                        String name = productJson.get("product_name").getAsString();
+                        String code = productJson.get("code").getAsString();
+                        String img = productJson.get("image_front_url").getAsString();
+                        String imgSmall = productJson.get("image_front_small_url").getAsString();
+                        mProduct.setName(name);
+                        mProduct.setBarcode(code);
+                        mProduct.setImgUrl(img);
+                        mProduct.setImgUrlSmall(imgSmall);
 
                         Log.v(TAG, "Product ok : " + mProduct.getName());
+                        Intent intent = new Intent(context, WineDetailActivity.class);
+                        intent.putExtra("product", mProduct);
+                        startActivity(intent);
+
                     } catch (Exception e) {
                         Log.v(TAG, "Product not ok : " + e.getLocalizedMessage());
                     }

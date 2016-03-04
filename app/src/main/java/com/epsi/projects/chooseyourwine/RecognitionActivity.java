@@ -8,8 +8,23 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.epsi.projects.chooseyourwine.beans.Product;
+import com.epsi.projects.chooseyourwine.ws.ApiClient;
+import com.epsi.projects.chooseyourwine.ws.ProductWS;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class RecognitionActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,7 +35,10 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
     private TextView barcodeValue;
 
     private static final int RC_BARCODE_CAPTURE = 9001;
-    private static final String TAG = "BarcodeMain";
+    private static final String TAG = "Logs recognition";
+    private ApiClient mApiClient;
+    private ProductWS mProductWS;
+    private Product mProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +101,15 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     statusMessage.setText(R.string.barcode_success);
-                    barcodeValue.setText(barcode.displayValue);
-                    Log.d(TAG, "Barcode read: " + barcode.displayValue);
+
+                    // Message logs
+                    Log.v(TAG, "Barcode value : " + barcode.displayValue);
+
+                    // Get product
+                    mProduct = new Product();
+                    mApiClient = new ApiClient(this);
+                    fetchProduct(barcode.displayValue);
+                    barcodeValue.setText(mProduct.getName());
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
                     Log.d(TAG, "No barcode captured, intent data is null");
@@ -97,5 +122,42 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
         else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    /**
+     * Get even from the API, given the id
+     *
+     * @param barcode Id to look for
+     */
+    private void fetchProduct(final String barcode) {
+        mApiClient.getProduct("3124480182647").enqueue(new Callback<ProductWS>() {
+
+            @Override
+            public void onResponse(Response<ProductWS> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    // Get product infos
+                    mProductWS = response.body();
+                    ArrayList<JsonElement> gg = mProductWS.getProduct();
+                    try {
+                        JsonObject productJson = gg.get(0).getAsJsonObject();
+
+                        mProduct.setName(productJson.get("product_name").toString());
+                        mProduct.setBarcode(productJson.get("code").toString());
+                        mProduct.setImgUrl(productJson.get("image_front_small_url").toString());
+
+                        Log.v(TAG, "Product ok : " + mProduct.getName());
+                    } catch (Exception e) {
+                        Log.v(TAG, "Product not ok : " + e.getLocalizedMessage());
+                    }
+                } else {
+                    Log.e(TAG, String.format("error finding %s event", barcode));
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d(TAG, String.format("Failure when getting event: %s", t.getLocalizedMessage()));
+            }
+        });
     }
 }

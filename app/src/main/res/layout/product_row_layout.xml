@@ -31,7 +31,19 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/product_code"
+        android:layout_toRightOf="@+id/product_img"
         android:layout_below="@+id/product_code"
         tools:text="Product name"
         />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_name"
+        android:layout_alignLeft="@+id/product_code"
+        android:numStars="5"
+        android:rating="3.7"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:layout_alignParentLeft="true"/>
 </RelativeLayout>

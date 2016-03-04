@@ -1,9 +1,6 @@
 package com.epsi.projects.chooseyourwine.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,6 @@ import com.epsi.projects.chooseyourwine.R;
 import com.epsi.projects.chooseyourwine.beans.Product;
 import com.epsi.projects.chooseyourwine.holders.ProductViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
@@ -45,10 +41,14 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Product product = getItem(position);
 
         // On rempli la vue
-        viewHolder.name.setText(product.getName());
+        if (product.getName().isEmpty())
+            viewHolder.name.setText("Unknown");
+        else
+            viewHolder.name.setText(product.getName());
         viewHolder.code.setText(product.getBarcode());
         new ImageLoader(viewHolder.image).execute(product.getImgUrl());
 
         return convertView;
     }
+
 }

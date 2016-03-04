@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.epsi.projects.chooseyourwine.ImageLoader;
 import com.epsi.projects.chooseyourwine.R;
 import com.epsi.projects.chooseyourwine.beans.Product;
 import com.epsi.projects.chooseyourwine.holders.ProductViewHolder;
@@ -43,13 +44,13 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             convertView.setTag(viewHolder);
         }
 
-        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
+        // On récupère l'item à la position donnée
         Product product = getItem(position);
 
-        //il ne reste plus qu'à remplir notre vue
+        // On rempli la vue
         viewHolder.name.setText(product.getName());
         viewHolder.code.setText(product.getBarcode());
-        viewHolder.image.setImageDrawable(new ColorDrawable(Color.RED));
+        new ImageLoader(viewHolder.image).execute(product.getImgUrl());
 
         return convertView;
     }

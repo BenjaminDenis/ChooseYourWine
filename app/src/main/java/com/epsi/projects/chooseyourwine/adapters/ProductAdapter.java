@@ -1,9 +1,6 @@
 package com.epsi.projects.chooseyourwine.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +13,11 @@ import com.epsi.projects.chooseyourwine.R;
 import com.epsi.projects.chooseyourwine.beans.Product;
 import com.epsi.projects.chooseyourwine.holders.ProductViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Benjamin on 04/03/2016.
+ * Adapter pour la liste des produits
  */
 public class ProductAdapter extends ArrayAdapter<Product> {
 
@@ -54,4 +51,5 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
         return convertView;
     }
+
 }

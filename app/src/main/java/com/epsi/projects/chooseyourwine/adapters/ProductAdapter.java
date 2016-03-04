@@ -45,7 +45,10 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Product product = getItem(position);
 
         // On rempli la vue
-        viewHolder.name.setText(product.getName());
+        if (product.getName().isEmpty())
+            viewHolder.name.setText("Unknown");
+        else
+            viewHolder.name.setText(product.getName());
         viewHolder.code.setText(product.getBarcode());
         new ImageLoader(viewHolder.image).execute(product.getImgUrl());
 

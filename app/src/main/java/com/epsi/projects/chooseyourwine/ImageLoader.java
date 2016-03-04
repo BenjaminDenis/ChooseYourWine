@@ -9,9 +9,6 @@ import android.widget.ImageView;
 import java.io.InputStream;
 import java.net.URL;
 
-/**
- * Created by boriest on 04/03/2016.
- */
 public class ImageLoader extends AsyncTask<String, Void, Bitmap> {
     private ImageView view;
 

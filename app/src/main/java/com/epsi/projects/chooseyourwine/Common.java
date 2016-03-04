@@ -1,9 +1,5 @@
 package com.epsi.projects.chooseyourwine;
 
-/**
- * Created by Benjamin on 03/03/2016.
- * Classe pour les constantes communes à toute l'API
- */
 public class Common {
 
     // SharedPreferences

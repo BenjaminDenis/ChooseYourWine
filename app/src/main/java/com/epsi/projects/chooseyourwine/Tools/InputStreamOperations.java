@@ -3,10 +3,6 @@ package com.epsi.projects.chooseyourwine.Tools;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Benjamin on 21/01/2016.
- * Complementary class
- */
 public class InputStreamOperations {
 
     /**

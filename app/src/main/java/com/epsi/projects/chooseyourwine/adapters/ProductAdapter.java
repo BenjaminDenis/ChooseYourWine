@@ -19,9 +19,6 @@ import com.epsi.projects.chooseyourwine.holders.ProductViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Benjamin on 04/03/2016.
- */
 public class ProductAdapter extends ArrayAdapter<Product> {
 
     public ProductAdapter(Context context, List<Product> products) {

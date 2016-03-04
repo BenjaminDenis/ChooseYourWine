@@ -13,10 +13,6 @@ import org.joda.time.DateTime;
 import java.lang.reflect.Type;
 import java.util.Date;
 
-/**
- * Created by Benjamin on 03/03/2016.
- * Class pour sérialiser et déserialiser les dates (json)
- */
 public class DateTimeTypeConverter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {
 
     @Override

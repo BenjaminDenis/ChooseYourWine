@@ -6,10 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-/**
- * Created by Benjamin on 21/01/2016.
- * Class for datas recuperation
- */
 public class ProductWS {
 
     // Serialize names

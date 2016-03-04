@@ -1,10 +1,12 @@
 package com.epsi.projects.chooseyourwine.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,9 +24,6 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-/**
- * Created by Benjamin on 04/03/2016.
- */
 public class ListWinesActivity extends AppCompatActivity {
 
     // Local
@@ -79,6 +78,16 @@ public class ListWinesActivity extends AppCompatActivity {
                         // Adapter pour la liste
                         ProductAdapter adapter = new ProductAdapter(ctx, listP);
                         mListView.setAdapter(adapter);
+                        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Product p = listP.get(position);
+                                Intent intent = new Intent(ListWinesActivity.this, WineDetailActivity.class);
+                                intent.putExtra("product", p);
+                                startActivity(intent);
+                            }
+
+                        });
                         Log.v(TAG, "Adapter ok");
                     } catch (Exception e) {
                         Log.v(TAG, "Products list not ok : " + e.getLocalizedMessage());

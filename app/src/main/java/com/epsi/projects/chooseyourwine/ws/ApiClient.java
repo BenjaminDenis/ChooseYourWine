@@ -13,10 +13,6 @@ import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
-/**
- * Created by Benjamin on 03/03/2016.
- * Class de l'API, pour l'accès au ws
- */
 public class ApiClient {
 
     public static final String TAG = "Logs recognition";

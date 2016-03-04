@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by Benjamin on 21/01/2016.
- * Product object
- */
 public class Product implements Serializable {
 
     // Attributes

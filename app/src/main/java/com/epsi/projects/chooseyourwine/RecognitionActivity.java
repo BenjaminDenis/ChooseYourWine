@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.epsi.projects.chooseyourwine.activities.ListWinesActivity;
 import com.epsi.projects.chooseyourwine.beans.Product;
 import com.epsi.projects.chooseyourwine.ws.ApiClient;
 import com.epsi.projects.chooseyourwine.ws.ProductWS;
@@ -52,6 +53,7 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
+        findViewById(R.id.show_wines).setOnClickListener(this);
     }
 
     /**
@@ -63,13 +65,17 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         if (v.getId() == R.id.read_barcode) {
             // launch barcode activity.
+            Log.v(TAG, "Launch barcode capture");
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
             intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
             intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
-
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
+        } else if (v.getId() == R.id.show_wines) {
+            // launch wines list
+            Log.v(TAG, "Launch wines list");
+            Intent intent = new Intent(this, ListWinesActivity.class);
+            startActivity(intent);
         }
-
     }
 
     /**
@@ -96,6 +102,7 @@ public class RecognitionActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Default launcher
         if (requestCode == RC_BARCODE_CAPTURE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {

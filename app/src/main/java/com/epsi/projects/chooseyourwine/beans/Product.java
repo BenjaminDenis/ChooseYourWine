@@ -1,8 +1,5 @@
 package com.epsi.projects.chooseyourwine.beans;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Benjamin on 21/01/2016.
  * Product object
@@ -67,5 +64,10 @@ public class Product {
 
     public void setNotation(float notation) {
         this.notation = notation;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
